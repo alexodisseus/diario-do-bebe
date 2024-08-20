@@ -1,0 +1,62 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Post Details {% endblock %}
+
+{% block body_class %} content-page {% endblock %}
+
+{% block stylesheets %}
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>{{ post.title }}</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('post_blueprint.new_post') }}">Home</a></li>
+              <li class="breadcrumb-item active">Post Details</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-8">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+            <small>Posted on {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            {% if current_user == post.author %}
+              <div class="mt-3">
+                <a href="{{ url_for('post_blueprint.update_post', id=post.id) }}" class="btn btn-secondary">Edit</a>
+                <form action="{{ url_for('post_blueprint.delete_post', id=post.id) }}" method="POST" style="display:inline;">
+                  <button class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock content %}
+
+{% block javascripts %}
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <script src="/static/assets/js/demo.js"></script>
+{% endblock javascripts %}

@@ -1,0 +1,200 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Perfil {% endblock %} 
+
+<!-- Elemento inserido no elemento BODY -->
+{% block body_class %} sidebar-mini {% endblock body_class %}
+
+<!-- Estilos específicos da página vão AQUI -->
+{% block stylesheets %}
+
+  <!-- Fonte do Google: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- Estilo do tema -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <!-- Content Wrapper. Contém o conteúdo da página -->
+  <div class="content-wrapper">
+    <!-- Cabeçalho do conteúdo (Header da página) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Perfil</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Início</a></li>
+              <li class="breadcrumb-item active">Perfil do Usuário</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Conteúdo principal -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+
+            <!-- Imagem do Perfil -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="/static/assets/img/user4-128x128.jpg"
+                       alt="Foto de perfil do usuário">
+                </div>
+
+                <h3 class="profile-username text-center">
+                  {{ cotista.name }}
+                </h3>
+
+                <p class="text-muted text-center">
+                  {{ cotista.email }}
+                </p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>CPF</b> <span class="float-right text-muted">{{ cotista.cpf }}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Telefone</b> <span class="float-right text-muted">{{ cotista.telephone }}</span>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Celular</b> <span class="float-right text-muted">{{ cotista.cell }}</span>
+                  </li>
+                </ul>
+
+                <a href="#" class="btn btn-primary btn-block"><b>Editar</b></a>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- Caixa Sobre Mim -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Mais informações</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <strong><i class="fas fa-birthday-cake mr-1"></i> Data de Nascimento</strong>
+
+                <p class="text-muted">
+                  {{ cotista.birth }}
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-user-lock mr-1"></i> Ativo</strong>
+
+                <p class="text-muted">{{ 'Sim' if cotista.income_tax else 'Não' }}</p>
+
+                <hr>
+
+                <strong><i class="fas fa-id-card mr-1"></i> Código</strong>
+
+                <p class="text-muted">{{ cotista.code }}</p>
+
+                <hr>
+
+                <strong><i class="fas fa-file-invoice-dollar mr-1"></i> Imposto de Renda</strong>
+
+                <p class="text-muted">{{ 'Sim' if cotista.income_tax else 'Não' }}</p>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#endereco" data-toggle="tab">Endereço</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#conta-bancaria" data-toggle="tab">Conta Bancária</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#titulos" data-toggle="tab">Títulos</a></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="endereco">
+                    <!-- Detalhes do Endereço -->
+                    <p>
+                         {% for address in cotista.enderecos %}
+                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Endereço:</strong>
+                        <p class="text-muted">
+                          {{ address.street }}, {{ address.number }}<br>
+                          {{ address.city }} - {{ address.state }}<br>
+                          CEP: {{ address.cep }}
+                        </p>
+                    
+                      {% endfor %}
+                    </p>
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="conta-bancaria">
+                    <!-- Detalhes da Conta Bancária -->
+                    <p>
+                      <strong><i class="fas fa-university mr-1"></i> Conta Bancária:</strong>
+                      <br>
+                      <p>
+                         {% for acount in cotista.contas %}
+                        <p class="text-muted">
+                          Banco: {{ acount.bank }}, {{ acount.number_bank }}<br>
+                          Agencia: {{ acount.agency }} - Nonta: {{ acount.number_account }}<br>
+                          Endereço agencia: {{ acount.adress }}
+                        </p>
+                    
+                      {% endfor %}
+                    </p>
+                    </p>
+                  </div>
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="titulos">
+                    <!-- Detalhes dos Títulos -->
+                    <p>
+                      <strong><i class="fas fa-award mr-1"></i> Títulos:</strong>
+                      <br>
+                      Insira as informações dos títulos aqui...
+                    </p>
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Scripts específicos da página vão AQUI -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- AdminLTE para fins de demonstração -->
+  <script src="/static/assets/js/demo.js"></script>
+
+{% endblock javascripts %}
+

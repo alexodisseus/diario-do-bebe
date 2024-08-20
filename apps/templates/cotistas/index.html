@@ -1,0 +1,136 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Blank Page {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Calendar</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Calendar</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      
+          <div>
+            <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Cotistas Cadastrados</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 100%;">
+                    <input type="text" name="table_search"  class="form-control float-right" placeholder="Buscar..">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 10px">Código</th>
+                      <th>Nome</th>
+                      <th>E-mail</th>
+                      <th>Documento</th>
+                      <th>Telefone</th>
+                      <th style="width: 40px">Label</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%for x in data:%}
+                      
+                    
+                        
+                      <tr>
+                        <td>{{x.code}}</td>
+                        <td>{{x.name}}</td>
+                        <td>{{x.email}}</td>
+                        <td>{{x.cpf}}</td>
+                        <td>{{x.telephone}}</td>
+                        
+                        <td><a href="{{url_for('cotistas_blueprint.view', id=x.id)}}" class="btn-sm bg-primary">Ver</a></td>
+                      </tr>
+                    {%endfor%}
+                    
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
+              </div>
+            </div>
+            <!-- /.card -->
+
+          </div>
+          </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!-- /.content-wrapper -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="/static/assets/js/demo.js"></script>
+  
+{% endblock javascripts %}

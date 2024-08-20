@@ -1,0 +1,90 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} All Posts {% endblock %}
+
+{% block body_class %} content-page {% endblock %}
+
+{% block stylesheets %}
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/static/assets/css/adminlte.min.css">
+{% endblock stylesheets %}
+
+{% block content %}
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>All Posts</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('post_blueprint.new_post') }}">Home</a></li>
+              <li class="breadcrumb-item active">All Posts</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Posts List</h3>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Title</th>
+                      <th>Date Posted</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for post in posts %}
+                      <tr>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.date_posted.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                          <a href="{{ url_for('post_blueprint.post', id=post.id) }}" class="btn btn-info btn-sm">View</a>
+                          {% if current_user == post.author %}
+                            <a href="{{ url_for('post_blueprint.update_post', id=post.id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                            <form action="{{ url_for('post_blueprint.delete_post', id=post.id) }}" method="POST" style="display:inline;">
+                              <button class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                          {% endif %}
+                        </td>
+                      </tr>
+                    {% else %}
+                      <tr>
+                        <td colspan="4" class="text-center">No posts available</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock content %}
+
+{% block javascripts %}
+  <script src="/static/assets/plugins/jquery/jquery.min.js"></script>
+  <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <script src="/static/assets/js/adminlte.min.js"></script>
+  <script src="/static/assets/js/demo.js"></script>
+{% endblock javascripts %}

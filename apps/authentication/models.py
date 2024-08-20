@@ -7,8 +7,11 @@ from flask_login import UserMixin
 
 from apps import db, login_manager
 
+
 from apps.authentication.util import hash_pass
 
+
+from sqlalchemy.orm import relationship
 class Users(db.Model, UserMixin):
 
     __tablename__ = 'Users'
@@ -17,6 +20,8 @@ class Users(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True)
     email = db.Column(db.String(64), unique=True)
     password = db.Column(db.LargeBinary)
+
+    posts = relationship('Post', backref='author', lazy=True)
 
     def __init__(self, **kwargs):
         for property, value in kwargs.items():

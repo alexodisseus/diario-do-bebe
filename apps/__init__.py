@@ -21,7 +21,7 @@ def register_extensions(app):
 
 
 def register_blueprints(app):
-    for module_name in ('authentication', 'home', 'cotistas' ):
+    for module_name in ('authentication', 'home', 'cotistas', 'post' ):
         module = import_module('apps.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
 
@@ -39,6 +39,7 @@ def configure_database(app):
             # fallback to SQLite
             basedir = os.path.abspath(os.path.dirname(__file__))
             app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'db.sqlite3')
+
 
             print('> Fallback to SQLite ')
             db.create_all()
